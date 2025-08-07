@@ -1,0 +1,10 @@
+shards:
+  - id: 1
+    writable: true
+    dsn: "postgres://postgres:password@localhost:5432/messages1?sslmode=disable"
+  - id: 2
+    writable: true
+    dsn: "postgres://postgres:password@localhost:5432/messages2?sslmode=disable"
+  - id: 3
+    writable: true
+    dsn: "postgres://postgres:password@localhost:5432/messages3?sslmode=disable"

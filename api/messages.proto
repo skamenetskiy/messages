@@ -1,0 +1,76 @@
+syntax = "proto3";
+package api;
+option go_package = "github.com/skamenetskiy/messages/api";
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+message Message {
+  uint64 id = 1;
+  optional uint64 thread_id = 2;
+  optional uint64 account_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+  repeated Mention mentions = 5;
+  string content = 6;
+}
+
+message Mention {
+  enum MentionType {
+    Unspecified = 0;
+    At = 1;
+    Hash = 2;
+    Dollar = 3;
+    Tilda = 4;
+  }
+  uint64 id = 1;
+  MentionType type = 2;
+  uint32 start = 3;
+  uint32 end = 4;
+}
+
+service MessagesAPI {
+  rpc Create (Create.Request) returns (Create.Response) {
+    option (google.api.http) = {
+      post: "/api/messages"
+      body: "*"
+    };
+  };
+  rpc Get (Get.Request) returns (Get.Response) {
+    option (google.api.http) = {
+      get: "/api/messages"
+    };
+  };
+  rpc Delete (Delete.Request) returns (Delete.Response) {
+    option (google.api.http) = {
+      delete: "/api/messages"
+      body: "*"
+    };
+  };
+}
+
+message Create {
+  message Request {
+    optional uint64 thread_id = 2;
+    optional uint64 account_id = 3;
+    map<string, uint64> mentions = 4;
+    string content = 5;
+  }
+  message Response {
+    Message message = 1;
+  }
+}
+
+message Get {
+  message Request {
+    repeated uint64 id = 1;
+  }
+  message Response {
+    repeated Message messages = 1;
+  }
+}
+
+message Delete {
+  message Request {
+    repeated uint64 ids = 1;
+  }
+  message Response {}
+}
