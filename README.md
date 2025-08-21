@@ -1,5 +1,7 @@
 # Messages
 
+[![Docker](https://github.com/skamenetskiy/messages/actions/workflows/docker.yml/badge.svg)](https://github.com/skamenetskiy/messages/actions/workflows/docker.yml)
+
 Messages service.
 
 ## Features
